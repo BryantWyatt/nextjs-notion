@@ -25,7 +25,7 @@ const ContactUsService = {
             method: 'POST',
             credentials: 'include',
             headers: requestHeaders,
-            cache: 'reload',
+            cache: 'no-store',
             body: body,
         });
         if(!res.ok) throw Error('Failed to fetch data');
