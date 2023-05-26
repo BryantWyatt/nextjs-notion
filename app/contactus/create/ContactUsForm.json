@@ -1,0 +1,10 @@
+{
+  "fields": [
+    {
+      "id": "first-name",
+      "label": "First Name",
+      "placeholder": "First Name",
+      "value": ""
+    }
+  ]
+}
