@@ -1,10 +1,54 @@
 {
-  "fields": [
-    {
-      "id": "first-name",
-      "label": "First Name",
-      "placeholder": "First Name",
-      "value": ""
+  "fields": {
+    "inputs": [
+      {
+        "id": "first-name",
+        "registerName": "first_name",
+        "text": "First Name",
+        "placeholder": "First Name"
+      },
+      {
+        "id": "last-name",
+        "registerName": "last_name",
+        "text": "Last Name",
+        "placeholder": "Last Name"
+      },
+      {
+        "id": "email",
+        "registerName": "email",
+        "text": "Email",
+        "placeholder": "Email"
+      },
+      {
+        "id": "phone",
+        "registerName": "phone",
+        "text": "phone",
+        "placeholder": "phone"
+      }
+    ],
+    "dropdowns": {
+      "channel": [
+        {
+          "value": "mail",
+          "text": "Mail"
+        },
+        {
+          "value": "newspaper",
+          "text": "Newspaper"
+        },
+        {
+          "value": "radio",
+          "text": "Radio"
+        },
+        {
+          "value": "tv",
+          "text": "TV"
+        },
+        {
+          "value": "website",
+          "text": "Website"
+        }
+      ]
     }
-  ]
+  }
 }

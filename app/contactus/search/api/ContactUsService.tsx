@@ -26,7 +26,7 @@ const ContactUsService = {
           }`
     const requestHeaders = getNotionHeaders()
     const res = await fetch(
-      `http://localhost:3000/contactus/search/api?name=${name}`,
+      `${window.location.origin}/contactus/search/api?name=${name}`,
       {
         method: 'POST',
         credentials: 'include',

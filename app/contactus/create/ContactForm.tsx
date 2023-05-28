@@ -1,39 +1,95 @@
 'use client'
 
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+
+import ContactFormData from './ContactUsForm.json'
+import ContactUsService from './api/ContactUsService'
+
+const formData = JSON.parse(JSON.stringify(ContactFormData, null, 2))
 
 const ContactForm = () => {
-  const [value, setValue] = useState('')
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm()
+  const [form, setFormData] = useState(formData)
+  const [contact, setContact] = useState<any>(null)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const onSubmit = (data: any) => {
+    const fetchData = async () => {
+      setIsLoading(true)
+      ContactUsService.createContact(data).then((res) => {
+        setContact(res)
+      })
+      setIsLoading(false)
+    }
+
+    fetchData()
+  }
 
   return (
-    <>
-      <h1>Under Construction</h1>
-      <input
-        className="m-8
-            dark:text-slate-400
-            border-gray-200
-            py-4
-            px-4
-            outline-none
-            border-b
-            bg-transparent
-        "
-        type="text"
-        id="search"
-        value={value}
-        placeholder="Search"
-        onChange={(e) => {
-          setValue(e.target.value)
-        }}
-      ></input>
-      <button
-        className="
-            bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded
-            "
-      >
-        Search
-      </button>
-    </>
+    <div className="flex justify-center">
+      <div className="w-full max-w-xs">
+        <h1 className="flex justify-center pt-8">Create Contact</h1>
+        <form
+          className="shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="flex flex-col">
+            {form.fields.inputs.map((field: any) => {
+              return (
+                <div key={field.id}>
+                  <label className="py-2">{field.text}</label>
+                  <input
+                    className="mb-4 dark:text-slate-700 py-2 px-4 rounded"
+                    placeholder={field.placeholder}
+                    {...register(field.registerName)}
+                  />
+                </div>
+              )
+            })}
+            <select
+              id="channel"
+              className="
+                mb-4
+                rounded
+                dark:text-slate-700
+                p-2
+                w-1/2
+              "
+              {...register('channel')}
+            >
+              {form.fields.dropdowns.channel.map((field: any) => {
+                return (
+                  <option key={field.value} value={field.text}>
+                    {field.text}
+                  </option>
+                )
+              })}
+            </select>
+            <input
+              className="
+
+                bg-green-500
+                hover:bg-green-700
+                text-white
+                font-bold
+                py-2
+                px-4
+                rounded
+                w-1/3
+              "
+              value="Save"
+              type="submit"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
   )
 }
 
