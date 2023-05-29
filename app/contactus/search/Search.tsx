@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import SearchResults from './SearchResults'
-import ContactUsService from './api/ContactUsService'
+import ContactUsService from '@/services/ContactUsService'
 
 const Search = () => {
   const [value, setValue] = useState('')

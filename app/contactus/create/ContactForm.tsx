@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import ContactFormData from './ContactUsForm.json'
-import ContactUsService from './api/ContactUsService'
+import ContactUsService from '@/services/ContactUsService'
 
 const formData = JSON.parse(JSON.stringify(ContactFormData, null, 2))
 
