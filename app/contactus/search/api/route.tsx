@@ -1,3 +1,4 @@
+import NotionService from '@/services/NotionService'
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
@@ -11,7 +12,7 @@ export async function POST(request: Request) {
           }
         }
     }`
-  const requestHeaders = getNotionHeaders()
+  const requestHeaders = NotionService.getNotionHeaders()
   const res = await fetch(
     'https://api.notion.com/v1/databases/888c6b8706cf4924be581aa7c2e7918b/query',
     {
@@ -26,20 +27,4 @@ export async function POST(request: Request) {
   const data = await res.json()
 
   return NextResponse.json(data)
-}
-
-const getNotionHeaders = () => {
-  const requestHeaders: HeadersInit = new Headers()
-  // Not a fan of this 'as' approach...
-  const token: string = process.env['NOTION_BEARER_TOKEN'] as string
-  const version: string = process.env['NOTION_VERSION'] as string
-
-  requestHeaders.set('Content-Type', 'application/json')
-  requestHeaders.set('Access-Control-Allow-Origin', '*')
-  requestHeaders.set('Access-Control-Allow-Methods', 'POST')
-  requestHeaders.set('Access-Control-Allow-Headers', 'Content-Type')
-  requestHeaders.set('Authorization', token)
-  requestHeaders.set('Notion-Version', version)
-
-  return requestHeaders
 }
