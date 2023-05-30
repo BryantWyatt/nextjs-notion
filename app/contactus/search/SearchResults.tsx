@@ -1,5 +1,15 @@
+import SearchResultsFormData from './SearchResultsFormData.json'
+
+interface Contact {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  channel: string
+}
+
 interface SearchResultsProps {
-  contact: any
+  contact: Contact
   isLoading: boolean
 }
 
@@ -10,16 +20,14 @@ const SearchResults = ({ contact, isLoading }: SearchResultsProps) => {
 
       {isLoading && <div>Loading...</div>}
       {/* TODO: Add forEach later once form data is being imported in */}
-      {contact && (
+      {contact.firstName.length > 0 && (
         <div className="container">
           <div className="flex gap-4">
             <div className="flex-1 flex-row items-center justify-left">
               <p>First Name</p>
             </div>
             <div className="flex-1 items-center justify-right">
-              <p>
-                {contact.results[0].properties.first_name.title[0].plain_text}
-              </p>
+              <p>{contact.firstName}</p>
             </div>
           </div>
           <div className="flex gap-4">
@@ -27,12 +35,7 @@ const SearchResults = ({ contact, isLoading }: SearchResultsProps) => {
               <p>Last Name</p>
             </div>
             <div className="flex-1 items-center justify-center">
-              <p>
-                {
-                  contact.results[0].properties.last_name.rich_text[0]
-                    .plain_text
-                }
-              </p>
+              <p>{contact.lastName}</p>
             </div>
           </div>
           <div className="flex gap-4">
@@ -40,7 +43,7 @@ const SearchResults = ({ contact, isLoading }: SearchResultsProps) => {
               <p>Email</p>
             </div>
             <div className="flex-1 items-center justify-center">
-              <p>{contact.results[0].properties.email.email}</p>
+              <p>{contact.email}</p>
             </div>
           </div>
           <div className="flex gap-4">
@@ -48,7 +51,7 @@ const SearchResults = ({ contact, isLoading }: SearchResultsProps) => {
               <p>Phone</p>
             </div>
             <div className="flex-1 items-center justify-center">
-              <p>{contact.results[0].properties.phone.phone_number}</p>
+              <p>{contact.phone}</p>
             </div>
           </div>
           <div className="flex gap-4">
@@ -56,7 +59,7 @@ const SearchResults = ({ contact, isLoading }: SearchResultsProps) => {
               <p>Channel</p>
             </div>
             <div className="flex-1 items-center justify-center">
-              <p>{contact.results[0].properties.reason.select.name}</p>
+              <p>{contact.channel}</p>
             </div>
           </div>
         </div>

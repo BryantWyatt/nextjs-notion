@@ -3,17 +3,36 @@
 import React, { useState } from 'react'
 import SearchResults from './SearchResults'
 import ContactUsService from '@/services/ContactUsService'
+import SearchService from '@/services/SearchService'
+
+interface Contact {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  channel: string
+}
+
+const initialContactState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  channel: '',
+}
 
 const Search = () => {
   const [value, setValue] = useState('')
-  const [contact, setContact] = useState<any>(null)
+  const [contact, setContact] = useState<Contact>(initialContactState)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleOnClick = () => {
     const fetchData = async () => {
       setIsLoading(true)
       ContactUsService.getContactByFirstName(value).then((res) => {
-        setContact(res)
+        const formattedContact = SearchService.formatSearchResult(res)
+
+        setContact(formattedContact)
       })
       setIsLoading(false)
     }
