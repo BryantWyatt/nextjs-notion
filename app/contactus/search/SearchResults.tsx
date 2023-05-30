@@ -1,5 +1,3 @@
-import SearchResultsFormData from './SearchResultsFormData.json'
-
 interface Contact {
   firstName: string
   lastName: string
