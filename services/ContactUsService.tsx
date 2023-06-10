@@ -15,7 +15,7 @@ const ContactUsService = {
   getContacts: async () => {
     const requestHeaders = NotionService.getNotionHeaders()
     const res = await fetch(
-      'https://api.notion.com/v1/databases/888c6b8706cf4924be581aa7c2e7918b/query',
+      `${window.location.origin}/contactus/view/api`,
       {
         method: 'POST',
         credentials: 'include',

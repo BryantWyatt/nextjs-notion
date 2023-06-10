@@ -1,8 +1,9 @@
+import ViewContacts from "./ViewContacts"
+
 const Page = () => {
   return (
     <div>
-      <h1>View Contacts</h1>
-      <h2>Under Construction</h2>
+      <ViewContacts />
     </div>
   )
 }

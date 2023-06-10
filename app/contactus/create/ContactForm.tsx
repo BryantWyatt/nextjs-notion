@@ -12,7 +12,6 @@ const ContactForm = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm()
   const [form, setFormData] = useState(formData)

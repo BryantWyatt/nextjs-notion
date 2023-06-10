@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import SearchResults from './SearchResults'
 import ContactUsService from '@/services/ContactUsService'
-import SearchService from '@/services/SearchService'
+import FormatUtils from '@/utils/FormatUtils'
 
 interface Contact {
   firstName: string
@@ -30,7 +30,7 @@ const Search = () => {
     const fetchData = async () => {
       setIsLoading(true)
       ContactUsService.getContactByFirstName(value).then((res) => {
-        const formattedContact = SearchService.formatSearchResult(res)
+        const formattedContact = FormatUtils.formatSearchResult(res)
 
         setContact(formattedContact)
       })
@@ -55,7 +55,7 @@ const Search = () => {
                 "
           id="search"
           type="text"
-          placeholder=""
+          placeholder="Search by First Name"
           value={value}
           onChange={(e) => {
             setValue(e.target.value)
