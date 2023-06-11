@@ -5,7 +5,7 @@ const ContactUsService = {
   createContact: async (form: any) => {
     // TODO: Build interface to strictly type the body.
     const body = getBody(form)
-    const res = await fetch(`${window.location.origin}/contactus/create/api`, {
+    const res = await fetch('/contactus/create/api', {
       method: 'POST',
       body: body,
     })
@@ -15,7 +15,7 @@ const ContactUsService = {
   getContacts: async () => {
     const requestHeaders = NotionService.getNotionHeaders()
     const res = await fetch(
-      `${window.location.origin}/contactus/view/api`,
+      '/contactus/view/api',
       {
         method: 'POST',
         credentials: 'include',
@@ -38,7 +38,7 @@ const ContactUsService = {
               }
           }`
     const res = await fetch(
-      `${window.location.origin}/contactus/search/api?name=${name}`,
+      '/contactus/search/api?name=${name}',
       {
         method: 'POST',
         body: body,

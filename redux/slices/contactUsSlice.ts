@@ -3,8 +3,6 @@ import { RootState } from '../store';
 import ContactUsService from "@/services/ContactUsService";
 import FomatUtils from "@/utils/FormatUtils";
 
-const domain = window.location.origin;
-
 interface ContactsState {
     loading: string;
     contacts: any[]
@@ -15,7 +13,7 @@ const initialState: ContactsState = {
     contacts: []
 }
 
-export const fetchContacts = createAsyncThunk(`${domain}/contactus/view/api`, async () => {
+export const fetchContacts = createAsyncThunk('/contactus/view/api', async () => {
     const response = await ContactUsService.getContacts();
     const formattedResponse = FomatUtils.formatContacts(response);
     return formattedResponse;

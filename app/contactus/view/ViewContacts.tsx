@@ -2,7 +2,7 @@
 
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { fetchContacts, selectContacts } from "@/redux/slices/contactUsSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 
 const ViewContacts = () => {
