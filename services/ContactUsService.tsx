@@ -14,15 +14,12 @@ const ContactUsService = {
   },
   getContacts: async () => {
     const requestHeaders = NotionService.getNotionHeaders()
-    const res = await fetch(
-      '/contactus/view/api',
-      {
-        method: 'POST',
-        credentials: 'include',
-        headers: requestHeaders,
-        cache: 'no-store',
-      }
-    )
+    const res = await fetch('/contactus/view/api', {
+      method: 'POST',
+      credentials: 'include',
+      headers: requestHeaders,
+      cache: 'no-store',
+    })
     if (!res.ok) throw Error('Failed to fetch data')
     return res.json()
   },
@@ -37,13 +34,10 @@ const ContactUsService = {
                 }
               }
           }`
-    const res = await fetch(
-      '/contactus/search/api?name=${name}',
-      {
-        method: 'POST',
-        body: body,
-      }
-    )
+    const res = await fetch('/contactus/search/api?name=${name}', {
+      method: 'POST',
+      body: body,
+    })
     if (!res.ok) throw Error('Failed to fetch data')
     return res.json()
   },

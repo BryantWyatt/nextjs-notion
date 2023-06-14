@@ -1,16 +1,14 @@
-import {
-    configureStore
-} from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit'
 
 import contactUsSlice from './slices/contactUsSlice'
 
 export const store = configureStore({
-    reducer: {
-        contactUs: contactUsSlice
-    }
+  reducer: {
+    contactUs: contactUsSlice,
+  },
 })
 
-export default store;
+export default store
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
