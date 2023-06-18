@@ -22,9 +22,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
+      "@/notion/*": ["notion/*"],
+      "@/redux/*": ["redux/*"],
       "@/services/*": ["services/*"],
-      "@/utils/*": ["utils/*"],
-      "@/redux/*": ["redux/*"]
+      "@/utils/*": ["utils/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

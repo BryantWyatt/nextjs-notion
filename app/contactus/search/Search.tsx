@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import SearchResults from './SearchResults'
 import ContactUsService from '@/services/ContactUsService'
 import FormatUtils from '@/utils/FormatUtils'
+import { firstName } from '@/notion/Types'
 
 interface Contact {
   firstName: string
@@ -29,7 +30,7 @@ const Search = () => {
   const handleOnClick = () => {
     const fetchData = async () => {
       setIsLoading(true)
-      ContactUsService.getContactByFirstName(value).then((res) => {
+      ContactUsService.getContactByFieldName(value, firstName).then((res) => {
         const formattedContact = FormatUtils.formatSearchResult(res)
 
         setContact(formattedContact)
