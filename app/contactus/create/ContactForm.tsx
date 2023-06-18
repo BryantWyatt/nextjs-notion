@@ -46,30 +46,37 @@ const ContactForm = () => {
                   <input
                     className="mb-4 dark:text-slate-700 py-2 px-4 rounded"
                     placeholder={field.placeholder}
-                    {...register(field.registerName)}
+                    {...register(field.registerName, { required: true })}
                   />
+                  {errors?.[`${field.registerName}`] && (
+                    <p className="text-red-700">{field.text} is required</p>
+                  )}
                 </div>
               )
             })}
-            <select
-              id="channel"
-              className="
+            <label className="flex flex-col">
+              {' '}
+              Reason
+              <select
+                id="channel"
+                className="
                 mb-4
                 rounded
                 dark:text-slate-700
                 p-2
                 w-1/2
               "
-              {...register('channel')}
-            >
-              {form.fields.dropdowns.channel.map((field: any) => {
-                return (
-                  <option key={field.value} value={field.text}>
-                    {field.text}
-                  </option>
-                )
-              })}
-            </select>
+                {...register('channel')}
+              >
+                {form.fields.dropdowns.channel.map((field: any) => {
+                  return (
+                    <option key={field.value} value={field.text}>
+                      {field.text}
+                    </option>
+                  )
+                })}
+              </select>
+            </label>
             <input
               className="
 

@@ -22,7 +22,7 @@
       {
         "id": "phone",
         "registerName": "phone",
-        "text": "phone",
+        "text": "Phone",
         "placeholder": "phone"
       }
     ],
