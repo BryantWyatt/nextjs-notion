@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import SearchResults from './SearchResults'
+import SearchResults from '@/components/SearchResults/SearchResults'
 import ContactsService from '@/services/ContactsService'
 import FormatUtils from '@/utils/FormatUtils'
 import { firstName } from '@/notion/Types'

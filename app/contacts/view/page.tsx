@@ -1,4 +1,4 @@
-import ViewContacts from './ViewContacts'
+import ViewContacts from '@/components/ViewContacts/ViewContacts';
 
 const Page = () => {
   return (
