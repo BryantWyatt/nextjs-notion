@@ -3,10 +3,10 @@ import { ICreateContactRequest } from '@/notion/ICreateContactRequest'
 import { IFilterContact } from '@/notion/IGetContactByFieldName'
 import { contactFilters } from '@/notion/Types'
 
-const ContactUsService = {
+const ContactsService = {
   createContact: async (form: any) => {
     const body = getCreateContactRequestBody(form)
-    const res = await fetch('/contactus/create/api', {
+    const res = await fetch('/contacts/create/api', {
       method: 'POST',
       body: JSON.stringify(body),
     })
@@ -15,7 +15,7 @@ const ContactUsService = {
   },
   getContacts: async () => {
     const requestHeaders = NotionService.getNotionHeaders()
-    const res = await fetch('/contactus/view/api', {
+    const res = await fetch('/contacts/view/api', {
       method: 'POST',
       credentials: 'include',
       headers: requestHeaders,
@@ -33,7 +33,7 @@ const ContactUsService = {
         },
       },
     }
-    const res = await fetch('/contactus/search/api?name=${name}', {
+    const res = await fetch('/contacts/search/api?name=${name}', {
       method: 'POST',
       body: JSON.stringify(body),
     })
@@ -82,4 +82,4 @@ const getCreateContactRequestBody = (form: any) => {
   return createContactRequestBody
 }
 
-export default ContactUsService
+export default ContactsService

@@ -6,7 +6,7 @@ import {
   selectContacts,
   selectErrors,
   selectLoading,
-} from '@/redux/slices/contactUsSlice'
+} from '@/redux/slices/contactsSlice'
 import { useEffect } from 'react'
 
 const ViewContacts = () => {

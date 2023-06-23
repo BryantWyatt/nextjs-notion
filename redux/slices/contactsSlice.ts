@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store'
-import ContactUsService from '@/services/ContactUsService'
+import ContactsService from '@/services/ContactsService'
 import FomatUtils from '@/utils/FormatUtils'
 
 interface ContactsState {
@@ -16,16 +16,16 @@ const initialState: ContactsState = {
 }
 
 export const fetchContacts = createAsyncThunk(
-  '/contactus/view/api',
+  '/contacts/view/api',
   async () => {
-    const response = await ContactUsService.getContacts()
+    const response = await ContactsService.getContacts()
     const formattedResponse = FomatUtils.formatContacts(response)
     return formattedResponse
   }
 )
 
-export const contactUsSlice = createSlice({
-  name: 'contactUs',
+export const contactsSlice = createSlice({
+  name: 'contacts',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -44,9 +44,7 @@ export const contactUsSlice = createSlice({
   },
 })
 
-// export const {loadingContacts, contactsReceived } = contactUsSlice.actions
-
-export const selectContacts = (state: RootState) => state.contactUs.contacts
-export const selectErrors = (state: RootState) => state.contactUs.error
-export const selectLoading = (state: RootState) => state.contactUs.loading
-export default contactUsSlice.reducer
+export const selectContacts = (state: RootState) => state.contacts.contacts
+export const selectErrors = (state: RootState) => state.contacts.error
+export const selectLoading = (state: RootState) => state.contacts.loading
+export default contactsSlice.reducer

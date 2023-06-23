@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import ContactFormData from './ContactUsForm.json'
-import ContactUsService from '@/services/ContactUsService'
+import ContactFormData from './ContactForm.json'
+import ContactsService from '@/services/ContactsService'
 
 const formData = JSON.parse(JSON.stringify(ContactFormData, null, 2))
 
@@ -21,7 +21,7 @@ const ContactForm = () => {
   const onSubmit = (data: any) => {
     const fetchData = async () => {
       setIsLoading(true)
-      ContactUsService.createContact(data).then((res) => {
+      ContactsService.createContact(data).then((res) => {
         setContact(res)
       })
       setIsLoading(false)

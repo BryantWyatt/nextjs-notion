@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import SearchResults from './SearchResults'
-import ContactUsService from '@/services/ContactUsService'
+import ContactsService from '@/services/ContactsService'
 import FormatUtils from '@/utils/FormatUtils'
 import { firstName } from '@/notion/Types'
 
@@ -30,7 +30,7 @@ const Search = () => {
   const handleOnClick = () => {
     const fetchData = async () => {
       setIsLoading(true)
-      ContactUsService.getContactByFieldName(value, firstName).then((res) => {
+      ContactsService.getContactByFieldName(value, firstName).then((res) => {
         const formattedContact = FormatUtils.formatSearchResult(res)
 
         setContact(formattedContact)

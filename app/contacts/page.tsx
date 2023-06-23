@@ -3,15 +3,15 @@ import Link from 'next/link'
 const Page = () => {
   const pages = [
     {
-      href: 'contactus/search',
+      href: 'contacts/search',
       text: 'Search',
     },
     {
-      href: 'contactus/create',
+      href: 'contacts/create',
       text: 'Create Contact',
     },
     {
-      href: 'contactus/view',
+      href: 'contacts/view',
       text: 'View Contacts',
     },
   ]
