@@ -13,9 +13,21 @@ const ContactsService = {
     if (!res.ok) throw Error('Failed to fetch data')
     return res.json()
   },
+  getContact: async (id: string) => {
+    const requestHeaders = NotionService.getNotionHeaders()
+    const res = await fetch(`/contacts/${id}/api`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: requestHeaders,
+      cache: 'no-store',
+    })
+
+    if (!res.ok) throw Error('Failed to fetch data')
+    return res.json()
+  },
   getContacts: async () => {
     const requestHeaders = NotionService.getNotionHeaders()
-    const res = await fetch('/contacts/view/api', {
+    const res = await fetch('/contacts/api', {
       method: 'POST',
       credentials: 'include',
       headers: requestHeaders,
@@ -33,7 +45,7 @@ const ContactsService = {
         },
       },
     }
-    const res = await fetch('/contacts/search/api?name=${name}', {
+    const res = await fetch(`/contacts/search/api?name=${name}`, {
       method: 'POST',
       body: JSON.stringify(body),
     })
@@ -48,7 +60,7 @@ const getCreateContactRequestBody = (form: any) => {
       database_id: '888c6b8706cf4924be581aa7c2e7918b',
     },
     properties: {
-      reason: {
+      channel: {
         select: {
           name: form.channel,
         },

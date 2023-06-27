@@ -1,4 +1,4 @@
-import { IReason, IRichText, ITitle } from './IPageProperties'
+import { IChannel, IRichText, ITitle } from './IPageProperties'
 
 export interface ICreateContactRequest {
   parent: IDatabaseId
@@ -10,7 +10,7 @@ interface IDatabaseId {
 }
 
 interface IProperties {
-  reason: IReason
+  channel: IChannel
   email: IEmail
   phone: IPhone
   last_name: ILastName

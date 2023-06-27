@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import SearchResults from '@/components/SearchResults/SearchResults'
+import ViewContact from '@/components/ViewContact/ViewContact'
 import ContactsService from '@/services/ContactsService'
 import FormatUtils from '@/utils/FormatUtils'
 import { firstName } from '@/notion/Types'
@@ -71,7 +71,10 @@ const Search = () => {
           Submit
         </button>
       </div>
-      <SearchResults contact={contact} isLoading={isLoading} />
+      <h1 className="flex flex-col items-center justify-center pb-8">
+        Search Results
+      </h1>
+      {isLoading ? <div>Loading...</div> : <ViewContact contact={contact} />}
     </div>
   )
 }

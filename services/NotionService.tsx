@@ -45,6 +45,20 @@ const NotionService = {
     if (!res.ok) throw Error('Failed to fetch data')
     return data
   },
+  getPage: async (id: string) => {
+    const requestHeaders = NotionService.getNotionHeaders()
+    const res = await fetch(`https://api.notion.com/v1/pages/${id}`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: requestHeaders,
+      cache: 'no-store',
+    })
+
+    const data = await res.json()
+
+    if (!res.ok) throw Error('Failed to fetch data')
+    return data
+  },
 }
 
 export default NotionService

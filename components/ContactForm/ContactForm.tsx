@@ -56,7 +56,7 @@ const ContactForm = () => {
             })}
             <label className="flex flex-col">
               {' '}
-              Reason
+              Channel
               <select
                 id="channel"
                 className="

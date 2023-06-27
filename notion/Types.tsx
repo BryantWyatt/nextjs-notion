@@ -1,11 +1,11 @@
-export const reason = 'reason'
+export const channel = 'channel'
 export const email = 'email'
 export const phone = 'phone'
 export const lastName = 'last_name'
 export const firstName = 'first_name'
 
 export type contactFilters =
-  | typeof reason
+  | typeof channel
   | typeof email
   | typeof phone
   | typeof lastName

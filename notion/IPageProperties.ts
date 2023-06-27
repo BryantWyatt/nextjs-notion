@@ -1,4 +1,4 @@
-export interface IReason {
+export interface IChannel {
   select: ISelect
 }
 
