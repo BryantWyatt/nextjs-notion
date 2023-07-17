@@ -1,44 +1,39 @@
 'use client'
-import ViewContact from '@/components/ViewContact/ViewContact'
-import { useAppSelector, useAppDispatch } from '@/redux/hooks'
-import {
-  fetchContact,
-  selectContact,
-  selectErrors,
-  selectLoading,
-} from '@/redux/slices/contactsSlice'
 
-import { useEffect, useState } from 'react'
+import ViewContact from '@/components/ViewContact/ViewContact'
+import { useGetContactQuery } from '@/redux/slices/contactsSlice'
 
 const Page = ({ params }: { params: { slug: string } }) => {
-  const dispatch = useAppDispatch()
-  const contact = useAppSelector(selectContact)
-  const loading: 'idle' | 'pending' | 'fulfilled' | 'rejected' =
-    useAppSelector(selectLoading)
-  const error = useAppSelector(selectErrors)
+  const { data, isLoading, error } = useGetContactQuery(params.slug)
 
-  useEffect(() => {
-    const fetchData = () => {
-      dispatch(fetchContact(params.slug))
+  if (error) {
+    if ('status' in error) {
+      // you can access all properties of `FetchBaseQueryError` here
+      const errMsg = 'error' in error ? error.error : JSON.stringify(error.data)
+
+      return (
+        <div>
+          <div>An error has occurred:</div>
+          <div>{errMsg}</div>
+        </div>
+      )
+    } else {
+      // you can access all properties of `SerializedError` here
+      return <div>{error.message}</div>
     }
-    fetchData()
-  }, [dispatch])
+  }
 
   return (
     <div className="flex justify-center">
       <div className="w-full max-w-sm">
-        {loading === 'pending' ? (
+        {isLoading ? (
           <div className="flex justify-center">Loading</div>
         ) : error ? (
-          <div className="flex justify-center">Error: {error}</div>
+          <div className="flex justify-center">{error}</div>
         ) : (
-          <>
-            {'firstName' in contact && (
-              <div className="pt-4">
-                <ViewContact contact={contact} />
-              </div>
-            )}
-          </>
+          <div className="pt-4">
+            <ViewContact contact={data} />
+          </div>
         )}
       </div>
     </div>

@@ -1,12 +1,21 @@
+import { setupListeners } from '@reduxjs/toolkit/dist/query'
+import { contactsApi } from './slices/contactsSlice'
 import { configureStore } from '@reduxjs/toolkit'
 
-import contactsSlice from './slices/contactsSlice'
-
 export const store = configureStore({
+  // Add the generated reducer as a specific top-level slice
   reducer: {
-    contacts: contactsSlice,
+    [contactsApi.reducerPath]: contactsApi.reducer,
   },
+  // Adding the api middleware enables caching, invlidation, polling
+  // other useful features of `rtk-query`.
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(contactsApi.middleware),
 })
+
+// optional, but required for refetchOnFocus/refetchOnReconnect behaviors
+// see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
+setupListeners(store.dispatch)
 
 export default store
 

@@ -1,70 +1,65 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { RootState } from '../store'
-import ContactsService from '@/services/ContactsService'
+import { IFilterContact } from '@/notion/IGetContactByFieldName'
+import { contactFilters } from '@/notion/Types'
 import FormatUtils from '@/utils/FormatUtils'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-interface ContactsState {
-  loading: 'idle' | 'pending' | 'fulfilled' | 'rejected'
-  contacts: any[]
-  contact: any
-  error: string | null | undefined
-}
-
-const initialState: ContactsState = {
-  contacts: [],
-  contact: {},
-  loading: 'idle',
-  error: null,
-}
-
-export const fetchContacts = createAsyncThunk('/contacts/api', async () => {
-  const response = await ContactsService.getContacts()
-  const formattedResponse = FormatUtils.formatContacts(response)
-  return formattedResponse
+// Define a service using base URL and expected endpoints
+export const contactsApi = createApi({
+  reducerPath: 'contactsApi',
+  baseQuery: fetchBaseQuery({ baseUrl: '/contacts' }),
+  endpoints: (build) => ({
+    createContact: build.mutation<any, Partial<any>>({
+      query: (data: any) => ({
+        url: '/create/api',
+        method: 'POST',
+        body: JSON.stringify(FormatUtils.formatCreateContactRequestBody(data)),
+      }),
+    }),
+    getContacts: build.query({
+      query: () => ({ url: '/api', method: 'POST' }),
+      transformResponse: (responseData: any): any => {
+        const formattedContacts = FormatUtils.formatContacts(responseData)
+        return formattedContacts
+      },
+    }),
+    getContact: build.query<any, any>({
+      query: (id) => ({ url: `/${id}/api`, method: 'GET' }),
+      transformResponse: (responseData: any): any => {
+        const formattedContact = FormatUtils.formatContact(responseData)
+        return formattedContact
+      },
+    }),
+    deleteContact: build.mutation<{ success: boolean; id: string }, any>({
+      query: (id: string) => ({ url: `/${id}/api`, method: 'DELETE' }),
+    }),
+    getContactByFieldName: build.mutation<any, Partial<any>>({
+      query: (data: any) => {
+        const body: IFilterContact = {
+          filter: {
+            property: data.field,
+            rich_text: {
+              contains: data.searchTerm,
+            },
+          },
+        }
+        return {
+          url: `search/api?name=${data.searchTerm}`,
+          method: 'POST',
+          body: JSON.stringify(body),
+        }
+      },
+      transformResponse: (responseData: any): any => {
+        const formattedContact = FormatUtils.formatSearchResult(responseData)
+        return formattedContact
+      },
+    }),
+  }),
 })
 
-export const fetchContact = createAsyncThunk(
-  'contacts/[slug]/api',
-  async (id: string) => {
-    const response = await ContactsService.getContact(id)
-    const formattedResponse = FormatUtils.formatContact(response)
-    return formattedResponse
-  }
-)
-
-export const contactsSlice = createSlice({
-  name: 'contacts',
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchContacts.pending, (state) => {
-        state.loading = 'pending'
-      })
-      .addCase(fetchContacts.fulfilled, (state, action) => {
-        state.loading = 'idle'
-        state.contacts = action.payload
-      })
-      .addCase(fetchContacts.rejected, (state, action) => {
-        state.loading = 'idle'
-        state.error = action.error.message
-      })
-      .addCase(fetchContact.pending, (state) => {
-        state.loading = 'pending'
-      })
-      .addCase(fetchContact.fulfilled, (state, action) => {
-        state.loading = 'idle'
-        state.contact = action.payload
-      })
-      .addCase(fetchContact.rejected, (state, action) => {
-        state.loading = 'idle'
-        state.error = action.error.message
-      })
-  },
-})
-
-export const selectContacts = (state: RootState) => state.contacts.contacts
-export const selectContact = (state: RootState) => state.contacts.contact
-export const selectErrors = (state: RootState) => state.contacts.error
-export const selectLoading = (state: RootState) => state.contacts.loading
-export default contactsSlice.reducer
+export const {
+  useGetContactsQuery,
+  useGetContactQuery,
+  useCreateContactMutation,
+  useDeleteContactMutation,
+  useGetContactByFieldNameMutation,
+} = contactsApi

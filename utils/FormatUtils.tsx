@@ -1,4 +1,5 @@
-import { Result } from 'postcss'
+import { ICreateContactRequest } from '@/notion/ICreateContactRequest'
+import { IFilterContact } from '@/notion/IGetContactByFieldName'
 
 const FormatUtils = {
   formatSearchResult: (searchResult: any) => {
@@ -58,6 +59,56 @@ const FormatUtils = {
       channel: data.properties.channel.select.name,
     }
     return formattedContact
+  },
+  formatCreateContactRequestBody: (form: any) => {
+    const createContactRequestBody: ICreateContactRequest = {
+      parent: {
+        database_id: '888c6b8706cf4924be581aa7c2e7918b',
+      },
+      properties: {
+        channel: {
+          select: {
+            name: form.channel,
+          },
+        },
+        email: {
+          email: form.email,
+        },
+        phone: {
+          phone_number: form.phone,
+        },
+        last_name: {
+          rich_text: [
+            {
+              text: {
+                content: form.last_name,
+              },
+            },
+          ],
+        },
+        first_name: {
+          title: [
+            {
+              text: {
+                content: form.first_name,
+              },
+            },
+          ],
+        },
+      },
+    }
+    return createContactRequestBody
+  },
+  formatGetContactByFieldNameBody: (form: any) => {
+    const formattedBody: IFilterContact = {
+      filter: {
+        property: form.field,
+        rich_text: {
+          contains: form.searchTerm,
+        },
+      },
+    }
+    return formattedBody
   },
 }
 

@@ -1,32 +1,46 @@
 'use client'
-
-import { useAppSelector, useAppDispatch } from '@/redux/hooks'
 import {
-  fetchContacts,
-  selectContacts,
-  selectErrors,
-  selectLoading,
+  useDeleteContactMutation,
+  useGetContactsQuery,
 } from '@/redux/slices/contactsSlice'
 import Link from 'next/link'
 import { useEffect } from 'react'
 
 const ViewContacts = () => {
-  const dispatch = useAppDispatch()
-  const contacts = useAppSelector(selectContacts)
-  const loading: 'idle' | 'pending' | 'fulfilled' | 'rejected' =
-    useAppSelector(selectLoading)
-  const error = useAppSelector(selectErrors)
+  const { data, isLoading, error, refetch } = useGetContactsQuery(
+    {},
+    { refetchOnMountOrArgChange: true }
+  )
+  const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation()
 
   useEffect(() => {
-    const fetchData = () => {
-      dispatch(fetchContacts())
+    refetch
+  })
+
+  const handleOnClick = (id: string) => {
+    deleteContact(id).then(() => refetch())
+  }
+
+  if (error) {
+    if ('status' in error) {
+      // you can access all properties of `FetchBaseQueryError` here
+      const errMsg = 'error' in error ? error.error : JSON.stringify(error.data)
+
+      return (
+        <div>
+          <div>An error has occurred:</div>
+          <div>{errMsg}</div>
+        </div>
+      )
+    } else {
+      // you can access all properties of `SerializedError` here
+      return <div>{error.message}</div>
     }
-    fetchData()
-  }, [dispatch])
+  }
 
   return (
     <div className="flex justify-center">
-      <div className="w-full max-w-xs">
+      <div className="w-full max-w-sm">
         <h1 className="flex justify-center pt-8 pb-4 underline">
           View Contacts
         </h1>
@@ -34,7 +48,7 @@ const ViewContacts = () => {
           <button
             className="
             bg-green-500
-            hover:bg-green-70
+            hover:bg-green-700
             text-white
             font-bold
             rounded
@@ -45,22 +59,33 @@ const ViewContacts = () => {
             <Link href="contacts/create">Create Contact</Link>
           </button>
         </div>
-        {loading === 'pending' ? (
+        {isLoading ? (
           <div className="flex justify-center">Loading</div>
         ) : error ? (
-          <div className="flex justify-center">Error: {error}</div>
+          <div className="flex justify-center">{error}</div>
         ) : (
           <div className="flex flex-col space-y-4 justify-center">
-            {contacts.map((contact) => {
+            {data.map((contact: any) => {
               return (
                 <div key={`contact-${contact.firstName}`}>
-                  <Link href={`contacts/${contact.id}`}>
-                    <div className="bg-white rounded outline-none py-4 px-4">
-                      <p className="text-black font-bold">
-                        {contact.firstName} {contact.lastName}
-                      </p>
-                    </div>
-                  </Link>
+                  <div className="flex space-x-4 justify-center">
+                    <Link
+                      className="flex-none w-5/6"
+                      href={`contacts/${contact.id}`}
+                    >
+                      <div className="bg-white rounded outline-none py-4 px-4 flex-initial">
+                        <p className="text-black font-bold">
+                          {contact.firstName} {contact.lastName}
+                        </p>
+                      </div>
+                    </Link>
+                    <button
+                      onClick={() => handleOnClick(contact.id)}
+                      className="flex-none w-1/6 bg-red-500 hover:bg-red-700 font-bold rounded py-4 px-6"
+                    >
+                      <p>X</p>
+                    </button>
+                  </div>
                 </div>
               )
             })}

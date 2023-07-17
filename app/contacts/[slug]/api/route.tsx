@@ -6,17 +6,14 @@ export async function GET(
   request: Request,
   { params }: { params: { slug: string } }
 ) {
-  console.log('contacts [slug] api')
-  console.log(params.slug)
-  const requestHeaders = NotionService.getNotionHeaders()
-  const res = await fetch(`https://api.notion.com/v1/pages/${params.slug}`, {
-    method: 'GET',
-    credentials: 'include',
-    headers: requestHeaders,
-    cache: 'no-store',
-  })
+  const res = await NotionService.getPage(params.slug)
+  return NextResponse.json(res)
+}
 
-  const data = await res.json()
-
-  return NextResponse.json(data)
+export async function DELETE(
+  request: Request,
+  { params }: { params: { slug: string } }
+) {
+  const res = await NotionService.deletePage(params.slug)
+  return NextResponse.json({ res })
 }

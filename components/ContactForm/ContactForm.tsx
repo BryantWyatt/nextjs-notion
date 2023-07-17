@@ -4,36 +4,35 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import ContactFormData from './ContactForm.json'
-import ContactsService from '@/services/ContactsService'
+import { useCreateContactMutation } from '@/redux/slices/contactsSlice'
 
 const formData = JSON.parse(JSON.stringify(ContactFormData, null, 2))
 
 const ContactForm = () => {
+  const [createContact, { isLoading, isSuccess }] = useCreateContactMutation()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
+  // TODO: Replace with a const?
   const [form, setFormData] = useState(formData)
-  const [contact, setContact] = useState<any>(null)
-  const [isLoading, setIsLoading] = useState(false)
 
-  const onSubmit = (data: any) => {
-    const fetchData = async () => {
-      setIsLoading(true)
-      ContactsService.createContact(data).then((res) => {
-        setContact(res)
-      })
-      setIsLoading(false)
+  const onSubmit = async (data: any) => {
+    try {
+      await createContact(data).unwrap()
+    } catch (e) {
+      console.log(e)
     }
-
-    fetchData()
   }
 
   return (
     <div className="flex justify-center">
       <div className="w-full max-w-xs">
         <h1 className="flex justify-center pt-8">Create Contact</h1>
+        {isSuccess && (
+          <span className="flex justify-center">Contact Created!</span>
+        )}
         <form
           className="shadow-md rounded px-8 pt-6 pb-8 mb-4"
           onSubmit={handleSubmit(onSubmit)}
