@@ -41,23 +41,25 @@ const ViewContacts = () => {
   return (
     <div className="flex justify-center">
       <div className="w-full max-w-sm">
-        <h1 className="flex justify-center pt-8 pb-4 underline">
+        <h1 className="flex justify-center pt-8 pb-4 font-bold text-3xl">
           View Contacts
         </h1>
         <div className="flex justify-center pb-4">
-          <button
-            className="
-            bg-green-500
-            hover:bg-green-700
-            text-white
-            font-bold
-            rounded
-            py-2
-            px-2
-            w-1/2"
-          >
-            <Link href="contacts/create">Create Contact</Link>
+        <Link className="
+        justify-content
+        items-center
+          bg-green-500
+          hover:bg-green-700
+          text-white
+          font-bold
+          rounded
+          py-2
+          px-4"
+          href="contacts/create">
+          <button>
+            Create Contact
           </button>
+          </Link>
         </div>
         {isLoading ? (
           <div className="flex justify-center">Loading</div>

@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 
 import ContactFormData from './ContactForm.json'
 import { useCreateContactMutation } from '@/redux/slices/contactsSlice'
+import Link from 'next/link';
 
 const formData = JSON.parse(JSON.stringify(ContactFormData, null, 2))
 
@@ -29,12 +30,20 @@ const ContactForm = () => {
   return (
     <div className="flex justify-center">
       <div className="w-full max-w-xs">
-        <h1 className="flex justify-center pt-8">Create Contact</h1>
+        <h1 className="flex justify-center pt-2 font-bold text-3xl">Create Contact</h1>
+        <Link
+        className="flex
+          justify-center
+          pt-4
+          text-green-500
+          font-bold
+          underline
+        " href="/contacts">Back to Contacts</Link>
         {isSuccess && (
           <span className="flex justify-center">Contact Created!</span>
         )}
         <form
-          className="shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          className="shadow-md rounded px-8 pt-2 pb-8 mb-4"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col">

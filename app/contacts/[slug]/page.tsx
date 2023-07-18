@@ -2,6 +2,7 @@
 
 import ViewContact from '@/components/ViewContact/ViewContact'
 import { useGetContactQuery } from '@/redux/slices/contactsSlice'
+import Link from 'next/link'
 
 const Page = ({ params }: { params: { slug: string } }) => {
   const { data, isLoading, error } = useGetContactQuery(params.slug)
@@ -26,6 +27,14 @@ const Page = ({ params }: { params: { slug: string } }) => {
   return (
     <div className="flex justify-center">
       <div className="w-full max-w-sm">
+      <Link
+        className="flex
+          justify-center
+          pt-4
+          text-green-500
+          font-bold
+          underline
+        " href="/contacts">Back to Contacts</Link>
         {isLoading ? (
           <div className="flex justify-center">Loading</div>
         ) : error ? (
