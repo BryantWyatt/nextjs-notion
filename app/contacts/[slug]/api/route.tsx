@@ -17,3 +17,17 @@ export async function DELETE(
   const res = await NotionService.deletePage(params.slug)
   return NextResponse.json({ res })
 }
+
+export async function PATCH(
+  request: Request,
+  { params }: { params: { slug: string } }
+) {
+  const formData = await request.json().then((res) => {
+    return res
+  })
+
+  const body = JSON.stringify(formData)
+  const res = await NotionService.updatePage(params.slug, body)
+
+  return NextResponse.json(res)
+}

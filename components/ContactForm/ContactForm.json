@@ -3,13 +3,13 @@
     "inputs": [
       {
         "id": "first-name",
-        "registerName": "first_name",
+        "registerName": "firstName",
         "text": "First Name",
         "placeholder": "First Name"
       },
       {
         "id": "last-name",
-        "registerName": "last_name",
+        "registerName": "lastName",
         "text": "Last Name",
         "placeholder": "Last Name"
       },
@@ -23,7 +23,7 @@
         "id": "phone",
         "registerName": "phone",
         "text": "Phone",
-        "placeholder": "phone"
+        "placeholder": "Phone"
       }
     ],
     "dropdowns": {

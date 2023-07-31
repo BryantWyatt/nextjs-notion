@@ -34,7 +34,7 @@ const Search = () => {
 
   const onSubmit = async (data: any) => {
     // TODO: The definition of constants feels weird here. Look into a better way.
-    const searchTerm = data.first_name
+    const searchTerm = data.firstName
     const field = firstName
     try {
       await getContactByFieldName({ field, searchTerm })
@@ -60,7 +60,7 @@ const Search = () => {
             bg-transparent
             w-2/3"
             placeholder="Search by First Name"
-            {...register('first_name', { required: true })}
+            {...register('firstName', { required: true })}
           />
           {errors.search && <span>This field is required</span>}
           <input

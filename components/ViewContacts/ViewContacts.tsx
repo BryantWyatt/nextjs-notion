@@ -45,20 +45,20 @@ const ViewContacts = () => {
           View Contacts
         </h1>
         <div className="flex justify-center pb-4">
-        <Link className="
-        justify-content
-        items-center
-          bg-green-500
-          hover:bg-green-700
-          text-white
-          font-bold
-          rounded
-          py-2
-          px-4"
-          href="contacts/create">
-          <button>
-            Create Contact
-          </button>
+          <Link
+            className="
+              justify-content
+              items-center
+            bg-green-500
+            hover:bg-green-700
+            text-white
+              font-bold
+              rounded
+              py-2
+              px-4"
+            href="contacts/create"
+          >
+            <button>Create Contact</button>
           </Link>
         </div>
         {isLoading ? (

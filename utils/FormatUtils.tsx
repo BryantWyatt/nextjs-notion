@@ -1,5 +1,6 @@
 import { ICreateContactRequest } from '@/notion/ICreateContactRequest'
 import { IFilterContact } from '@/notion/IGetContactByFieldName'
+import { IUpdateContactRequest } from '@/notion/IUpdateContactRequest'
 
 const FormatUtils = {
   formatSearchResult: (searchResult: any) => {
@@ -81,7 +82,7 @@ const FormatUtils = {
           rich_text: [
             {
               text: {
-                content: form.last_name,
+                content: form.lastName,
               },
             },
           ],
@@ -90,7 +91,7 @@ const FormatUtils = {
           title: [
             {
               text: {
-                content: form.first_name,
+                content: form.firstName,
               },
             },
           ],
@@ -109,6 +110,56 @@ const FormatUtils = {
       },
     }
     return formattedBody
+  },
+  formatUpdateContactRequestBody: (form: any) => {
+    const { channel, email, phone, lastName, firstName } = form
+    const updateContactRequestBody: IUpdateContactRequest = { properties: {} }
+
+    if (form.channel) {
+      updateContactRequestBody.properties.channel = {
+        select: {
+          name: channel,
+        },
+      }
+    }
+
+    if (form.email) {
+      updateContactRequestBody.properties.email = {
+        email: email,
+      }
+    }
+
+    if (form.phone) {
+      updateContactRequestBody.properties.phone = {
+        phone_number: phone,
+      }
+    }
+
+    if (form.lastName) {
+      updateContactRequestBody.properties.last_name = {
+        rich_text: [
+          {
+            text: {
+              content: lastName,
+            },
+          },
+        ],
+      }
+    }
+
+    if (form.firstName) {
+      updateContactRequestBody.properties.first_name = {
+        title: [
+          {
+            text: {
+              content: firstName,
+            },
+          },
+        ],
+      }
+    }
+
+    return updateContactRequestBody
   },
 }
 

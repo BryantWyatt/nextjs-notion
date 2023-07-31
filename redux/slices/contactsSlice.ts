@@ -15,18 +15,18 @@ export const contactsApi = createApi({
         body: JSON.stringify(FormatUtils.formatCreateContactRequestBody(data)),
       }),
     }),
-    getContacts: build.query({
-      query: () => ({ url: '/api', method: 'POST' }),
-      transformResponse: (responseData: any): any => {
-        const formattedContacts = FormatUtils.formatContacts(responseData)
-        return formattedContacts
-      },
-    }),
     getContact: build.query<any, any>({
       query: (id) => ({ url: `/${id}/api`, method: 'GET' }),
       transformResponse: (responseData: any): any => {
         const formattedContact = FormatUtils.formatContact(responseData)
         return formattedContact
+      },
+    }),
+    getContacts: build.query({
+      query: () => ({ url: '/api', method: 'POST' }),
+      transformResponse: (responseData: any): any => {
+        const formattedContacts = FormatUtils.formatContacts(responseData)
+        return formattedContacts
       },
     }),
     deleteContact: build.mutation<{ success: boolean; id: string }, any>({
@@ -53,6 +53,15 @@ export const contactsApi = createApi({
         return formattedContact
       },
     }),
+    updateContact: build.mutation<void, Pick<any, 'id'> & Partial<any>>({
+      query: ({ id, ...data }) => ({
+        url: `/${id}/api`,
+        method: 'PATCH',
+        body: JSON.stringify(
+          FormatUtils.formatUpdateContactRequestBody(data.formData)
+        ),
+      }),
+    }),
   }),
 })
 
@@ -62,4 +71,5 @@ export const {
   useCreateContactMutation,
   useDeleteContactMutation,
   useGetContactByFieldNameMutation,
+  useUpdateContactMutation,
 } = contactsApi

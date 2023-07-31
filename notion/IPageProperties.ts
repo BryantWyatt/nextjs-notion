@@ -22,3 +22,19 @@ export interface IContent {
 export interface IContains {
   contains: string
 }
+
+export interface IEmail {
+  email: string
+}
+
+export interface IPhone {
+  phone_number: string
+}
+
+export interface ILastName {
+  rich_text: IRichText[]
+}
+
+export interface IFirstName {
+  title: ITitle[]
+}

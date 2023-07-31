@@ -7,7 +7,10 @@ const NotionService = {
 
     requestHeaders.set('Content-Type', 'application/json')
     requestHeaders.set('Access-Control-Allow-Origin', '*')
-    requestHeaders.set('Access-Control-Allow-Methods', 'POST, GET, DELETE')
+    requestHeaders.set(
+      'Access-Control-Allow-Methods',
+      'POST, GET, DELETE, PATCH'
+    )
     requestHeaders.set('Access-Control-Allow-Headers', 'Content-Type')
     requestHeaders.set('Authorization', token)
     requestHeaders.set('Notion-Version', version)
@@ -22,7 +25,6 @@ const NotionService = {
         method: 'POST',
         credentials: 'include',
         headers: requestHeaders,
-        cache: 'no-store',
       }
     )
     const data = await res.json()
@@ -36,7 +38,6 @@ const NotionService = {
       method: 'POST',
       credentials: 'include',
       headers: requestHeaders,
-      cache: 'no-store',
       body: body,
     })
 
@@ -46,13 +47,12 @@ const NotionService = {
     return data
   },
   deletePage: async (id: string) => {
-    // In Notion, pages are not deleted but archived
+    // In Notion, pages are not deleted but archived. Effectively a soft delete.
     const requestHeaders = NotionService.getNotionHeaders()
     const res = await fetch(`https://api.notion.com/v1/blocks/${id}`, {
       method: 'DELETE',
       credentials: 'include',
       headers: requestHeaders,
-      cache: 'no-store',
     })
 
     const data = await res.json()
@@ -66,7 +66,6 @@ const NotionService = {
       method: 'GET',
       credentials: 'include',
       headers: requestHeaders,
-      cache: 'no-store',
     })
 
     const data = await res.json()
@@ -82,10 +81,23 @@ const NotionService = {
         method: 'POST',
         credentials: 'include',
         headers: requestHeaders,
-        cache: 'no-store',
         body: body,
       }
     )
+
+    const data = await res.json()
+
+    if (!res.ok) throw Error('Failed to fetch data')
+    return data
+  },
+  updatePage: async (id: string, body: any) => {
+    const requestHeaders = NotionService.getNotionHeaders()
+    const res = await fetch(`https://api.notion.com/v1/pages/${id}`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: requestHeaders,
+      body: body,
+    })
 
     const data = await res.json()
 
