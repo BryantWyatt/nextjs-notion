@@ -1,7 +1,5 @@
-// 'use client'
-
-import ContactForm from '@/components/ContactForm/ContactForm'
-import { readOnly } from '@/components/ContactForm/Types'
+import ContactFormContainer from '@/components/ContactForm/ContactFormContainer'
+import { edit } from '@/components/ContactForm/Types'
 import Link from 'next/link'
 
 const Page = ({ params }: { params: { slug: string } }) => {
@@ -22,7 +20,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
           </Link>
         </div>
         <div className="pt-2">
-          <ContactForm id={params.slug} mode={readOnly} />
+          <ContactFormContainer id={params.slug} mode={edit} />
         </div>
       </div>
     </div>

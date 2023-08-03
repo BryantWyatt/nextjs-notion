@@ -1,8 +1,8 @@
-import ContactForm from '@/components/ContactForm/ContactForm'
+import ContactFormContainer from '@/components/ContactForm/ContactFormContainer'
 import { create } from '@components/ContactForm/Types'
 
 const Page = () => {
-  return <ContactForm id={null} mode={create} />
+  return <ContactFormContainer mode={create} />
 }
 
 export default Page

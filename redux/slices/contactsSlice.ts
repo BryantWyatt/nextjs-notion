@@ -1,5 +1,4 @@
 import { IFilterContact } from '@/notion/IGetContactByFieldName'
-import { contactFilters } from '@/notion/Types'
 import FormatUtils from '@/utils/FormatUtils'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
