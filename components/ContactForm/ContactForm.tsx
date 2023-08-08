@@ -97,8 +97,8 @@ const ContactForm = ({ id = '', mode = null, data }: ContactFormProps) => {
         <div className="flex flex-col justify-content items-center">
           {mode == edit && (
             <Button
-              buttonHierarchy={inlineEdit ? primary : secondary}
-              buttonText={mode == edit ? 'Edit Contact' : 'Cancel Edit'}
+              buttonHierarchy={!inlineEdit ? primary : secondary}
+              buttonText={!inlineEdit ? 'Edit Contact' : 'Cancel Edit'}
               onClick={() => {
                 inlineEdit ? setInlineEdit(false) : setInlineEdit(true)
                 setFormState(formFieldValues)

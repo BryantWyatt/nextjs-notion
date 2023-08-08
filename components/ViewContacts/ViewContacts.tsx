@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Button from '../Button/Button'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 import ReduxErrorHandling from '../ReduxErrorHandling/ReduxErrorHandling'
+import { primary } from '../ContactForm/Types'
 
 const ViewContacts = () => {
   const { data, isLoading, error, refetch } = useGetContactsQuery(
@@ -50,7 +51,7 @@ const ViewContacts = () => {
         </h1>
         <div className="flex justify-center pb-4">
           <Link href="contacts/create">
-            <Button buttonHierarchy="primary" buttonText="Create Contact" />
+            <Button buttonHierarchy={primary} buttonText="Create Contact" />
           </Link>
         </div>
         {isLoading ? (

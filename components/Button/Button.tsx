@@ -1,5 +1,5 @@
 import { MouseEventHandler } from 'react'
-import { ButtonHierarchy } from '../ContactForm/Types'
+import { ButtonHierarchy, primary } from '../ContactForm/Types'
 
 interface ButtonProps {
   buttonHierarchy: ButtonHierarchy
@@ -11,14 +11,14 @@ const Button = ({ buttonHierarchy, buttonText, onClick }: ButtonProps) => {
   return (
     <button
       className={
-        buttonHierarchy
+        buttonHierarchy == primary
           ? `
                 items-center bg-green-500 hover:bg-green-700
                 text-white font-bold py-2 px-4 rounded`
           : `
                 justify-content items-center bg-gray-500
                 hover:bg-gray-700 text-white font-bold
-                rounded py-2 px-4 w-1/2`
+                rounded py-2 px-4`
       }
       onClick={() => {
         if (onClick) {
