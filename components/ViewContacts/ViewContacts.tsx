@@ -5,15 +5,19 @@ import {
 } from '@/redux/slices/contactsSlice'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import ReduxErrorHandling from '../ReduxErrorHandling/ReduxErrorHandling'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Button from '../Button/Button'
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import ReduxErrorHandling from '../ReduxErrorHandling/ReduxErrorHandling'
 
 const ViewContacts = () => {
   const { data, isLoading, error, refetch } = useGetContactsQuery(
     {},
     { refetchOnMountOrArgChange: true }
   )
-  const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation()
+  const [deleteContact, { isLoading: isDeleting, isSuccess: contactDeleted }] =
+    useDeleteContactMutation()
   const [fakeLoader, setFakeLoader] = useState(true)
 
   useEffect(() => {
@@ -21,10 +25,16 @@ const ViewContacts = () => {
 
     const timer = setTimeout(() => {
       setFakeLoader(false)
-    }, 3000)
+    }, 3500)
 
     return () => clearTimeout(timer)
   })
+
+  useEffect(() => {
+    if (contactDeleted) {
+      toast.success('Contact deleted successfully')
+    }
+  }, [isDeleting])
 
   const handleDeleteOnClick = (id: string) => {
     deleteContact(id).then(() => refetch())
@@ -45,6 +55,13 @@ const ViewContacts = () => {
         </div>
         {isLoading ? (
           <div className="flex justify-center">Loading...</div>
+        ) : isDeleting ? (
+          <div className="flex flex-col justify-center items-center">
+            <div>Deleting...</div>
+            <div className="flex justify-center ">
+              <LoadingSpinner />
+            </div>
+          </div>
         ) : error ? (
           <div className="flex justify-center">{errorResponse}</div>
         ) : (

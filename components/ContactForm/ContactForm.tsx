@@ -15,8 +15,8 @@ import ContactFormFields from './ContactFormFields'
 import { ContractFormMode, create, edit, primary, secondary } from './Types'
 
 import { redirect } from 'next/navigation'
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 import Button from '../Button/Button'
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 
 interface ContactFormProps {
   id: string | null
@@ -72,6 +72,7 @@ const ContactForm = ({ id = '', mode = null, data }: ContactFormProps) => {
   }
 
   const onSubmit = (formData: any) => {
+    setInlineEdit(false)
     if (mode == create) {
       try {
         createContact(formData).unwrap()
@@ -81,7 +82,6 @@ const ContactForm = ({ id = '', mode = null, data }: ContactFormProps) => {
     }
 
     if (mode == edit) {
-      setInlineEdit(false)
       try {
         updateContact({ id, formData }).unwrap()
       } catch (e) {
@@ -140,7 +140,11 @@ const ContactForm = ({ id = '', mode = null, data }: ContactFormProps) => {
               }
               type="submit"
             />
-            {(isUpdating || isCreating) && <LoadingSpinner />}
+            {(isUpdating || isCreating) && (
+              <div className="flex px-2 py-2 -translate-y-full">
+                <LoadingSpinner />
+              </div>
+            )}
           </div>
         </form>
       </div>
